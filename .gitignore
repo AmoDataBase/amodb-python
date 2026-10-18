@@ -1,0 +1,33 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+
+# Build output
+dist/
+build/
+node_modules/
+vendor/
+*.tsbuildinfo
+
+# Tool caches and coverage
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Secrets
+.env
+.env.local
+
+# Editors and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

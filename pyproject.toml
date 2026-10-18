@@ -1,0 +1,81 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "amodb"
+dynamic = ["version"]
+description = "Python client for the amodb movie and TV metadata API, compatible with TMDB v3 and OMDb. Sync and async, typed."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "amodb" }]
+keywords = ["amodb", "tmdb", "omdb", "movies", "tv", "api-client", "sdk", "httpx", "asyncio"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Framework :: AsyncIO",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+dependencies = ["httpx>=0.27,<1"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "anyio>=4",
+    "build>=1",
+    "ruff>=0.6",
+    "mypy>=1.10",
+]
+
+[project.urls]
+Homepage = "https://amodb.dev"
+Repository = "https://github.com/netlistenany-bot/amodb-python"
+Issues = "https://github.com/netlistenany-bot/amodb-python/issues"
+Changelog = "https://github.com/netlistenany-bot/amodb-python/blob/main/CHANGELOG.md"
+
+[tool.hatch.version]
+path = "src/amodb/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/amodb"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/tests",
+    "/README.md",
+    "/CHANGELOG.md",
+    "/LICENSE",
+    "/SECURITY.md",
+    "/CONTRIBUTING.md",
+    "/pyproject.toml",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+filterwarnings = ["error"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "W"]
+
+[tool.mypy]
+files = ["src/amodb"]
+strict = true
