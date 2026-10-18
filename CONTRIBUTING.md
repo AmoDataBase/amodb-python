@@ -22,4 +22,17 @@ Text in docs and comments: short, concrete sentences, sentence case headings, no
 
 Never commit API keys. Use environment variables and `.env` files that are ignored by git.
 
+## Releasing
+
+For maintainers.
+
+1. Update `CHANGELOG.md` and set the new version in `src/amodb/_version.py`.
+2. Commit, then tag the commit and push the tag: `git tag v0.2.0 && git push origin v0.2.0`.
+3. The Release workflow checks that the tag matches the version, builds the package, publishes it to PyPI and creates the GitHub release.
+
+PyPI uses trusted publishing, so no token is stored. One time setup:
+
+1. On PyPI add a trusted publisher for the project `amodb` with owner `amodb-dev`, repository `amodb-python`, workflow `release.yml` and environment `pypi`.
+2. In the repository settings create an environment named `pypi`.
+
 By contributing you agree that your work is released under the MIT license of this repository.

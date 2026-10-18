@@ -1,0 +1,6 @@
+{
+  "name": "amodb-python",
+  "description": "Python client for the amodb movie and TV metadata API, compatible with TMDB v3 and OMDb. Sync and async, typed.",
+  "homepage": "https://amodb.dev",
+  "topics": ["amodb", "tmdb", "omdb", "python", "movie-api", "tv-api", "api-client", "sdk", "httpx", "asyncio"]
+}

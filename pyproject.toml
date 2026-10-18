@@ -41,9 +41,9 @@ dev = [
 
 [project.urls]
 Homepage = "https://amodb.dev"
-Repository = "https://github.com/netlistenany-bot/amodb-python"
-Issues = "https://github.com/netlistenany-bot/amodb-python/issues"
-Changelog = "https://github.com/netlistenany-bot/amodb-python/blob/main/CHANGELOG.md"
+Repository = "https://github.com/amodb-dev/amodb-python"
+Issues = "https://github.com/amodb-dev/amodb-python/issues"
+Changelog = "https://github.com/amodb-dev/amodb-python/blob/main/CHANGELOG.md"
 
 [tool.hatch.version]
 path = "src/amodb/_version.py"

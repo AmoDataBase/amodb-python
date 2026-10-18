@@ -1,6 +1,18 @@
-<!-- GitHub topics: amodb, tmdb, omdb, python, movie-api, tv-api, api-client, sdk, httpx, asyncio -->
+<p align="center">
+  <a href="https://amodb.dev">
+    <img src="https://raw.githubusercontent.com/amodb-dev/.github/main/assets/lockup.png" alt="amodb" width="260">
+  </a>
+</p>
 
-# amodb for Python
+<h1 align="center">amodb-python</h1>
+
+<p align="center">Python client for the amodb movie and TV metadata API. Sync, async and typed.</p>
+
+<p align="center">
+  <a href="https://github.com/amodb-dev/amodb-python/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/amodb-dev/amodb-python/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://pypi.org/project/amodb/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/amodb"></a>
+  <a href="https://github.com/amodb-dev/amodb-python/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/amodb-dev/amodb-python"></a>
+</p>
 
 Typed Python client for the amodb movie and TV metadata API. It covers the TMDB v3 read endpoints, the OMDb compatible endpoint and the amodb extras (ratings, moods, soundtracks, wikidata, showtimes). Account, authentication and list write endpoints are not offered. It ships a sync `Client` and an async `AsyncClient`, both built on httpx.
 
@@ -318,6 +330,17 @@ python -m build
 ```
 
 Tests use `httpx.MockTransport` and never touch the network.
+
+## Links
+
+- Website: https://amodb.dev
+- Docs: https://amodb.dev/docs
+- Pricing: https://amodb.dev/pricing
+- Status: https://amodb.dev/status
+- Issues: https://github.com/amodb-dev/amodb-python/issues
+- Changelog: https://github.com/amodb-dev/amodb-python/blob/main/CHANGELOG.md
+- Security: https://github.com/amodb-dev/amodb-python/blob/main/SECURITY.md
+- Organization: https://github.com/amodb-dev
 
 ## License
 

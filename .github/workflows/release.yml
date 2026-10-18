@@ -1,0 +1,60 @@
+# Publishes to PyPI when a tag like v0.2.0 is pushed. No token is stored.
+# One time setup:
+#   1. On PyPI add a trusted publisher for the project amodb: owner amodb-dev,
+#      repository amodb-python, workflow release.yml, environment pypi.
+#   2. In the repository settings create an environment named pypi.
+# The version in src/amodb/_version.py must match the tag.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Check that the tag matches the package version
+        run: |
+          version="$(sed -n 's/^__version__ = "\(.*\)"$/\1/p' src/amodb/_version.py)"
+          test "v$version" = "$GITHUB_REF_NAME"
+      - run: python -m pip install --upgrade pip build twine
+      - run: python -m build
+      - run: twine check dist/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/amodb
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    needs: publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - run: gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --generate-notes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
