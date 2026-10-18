@@ -2,7 +2,7 @@
 
 # amodb for Python
 
-Typed Python client for the amodb movie and TV metadata API. It covers the TMDB v3 read endpoints, the OMDb compatible endpoint and the amodb extras (ratings, moods, soundtracks, showtimes). It ships a sync `Client` and an async `AsyncClient`, both built on httpx.
+Typed Python client for the amodb movie and TV metadata API. It covers the TMDB v3 read endpoints, the OMDb compatible endpoint and the amodb extras (ratings, moods, soundtracks, wikidata, showtimes). Account, authentication and list write endpoints are not offered. It ships a sync `Client` and an async `AsyncClient`, both built on httpx.
 
 amodb is a paid API. Get a key at https://amodb.dev/pricing. There is no free tier and no trial.
 
@@ -60,7 +60,9 @@ asyncio.run(main())
 client.search.movie("inception", year=2010, page=2)
 client.search.tv("severance")
 client.search.multi("alien")
+client.search.collection("matrix")
 client.movies.popular(page=2, region="US")
+client.movies.latest()
 client.trending.get("movie", "week")
 client.tv.season(1399, 1)
 client.tv.episode(1399, 1, 2)
@@ -68,7 +70,7 @@ client.discover.movie(sort_by="popularity.desc", with_genres=[28, 12])
 client.discover.movie({"release_date.gte": "2020-01-01"})
 ```
 
-Any extra keyword becomes a query parameter. Lists are joined with commas, booleans become `true` and `false`, and `None` values are dropped. For names that are not valid Python identifiers, pass a dict, as in the last line above. Every method also accepts `params={...}`.
+Lists take `page` from 1 to 500. Any extra keyword becomes a query parameter. Lists are joined with commas, booleans become `true` and `false`, and `None` values are dropped. For names that are not valid Python identifiers, pass a dict, as in the last line above. Every method also accepts `params={...}`.
 
 ## Details with append_to_response
 
@@ -76,6 +78,8 @@ Any extra keyword becomes a query parameter. Lists are joined with commas, boole
 movie = client.movies.details(550, append_to_response=["credits", "images", "ratings"])
 print(movie["credits"]["cast"][0]["name"])
 ```
+
+Pass up to 20 names. Names the API does not know are ignored without an error. For movies and TV shows these work: `credits`, `images`, `videos`, `keywords`, `translations`, `external_ids`, `similar`, `recommendations`, `reviews`, `watch/providers`, `alternative_titles`, `lists`, `moods`, `soundtracks`, `ratings`, `wikidata` and `showtimes`, plus `release_dates` for movies and `content_ratings` and `episode_groups` for TV. People take `combined_credits`, `movie_credits`, `tv_credits`, `external_ids` and `images`.
 
 ## Language
 
@@ -113,24 +117,74 @@ OMDb calls send the key as the `apikey` query parameter. When the answer is HTTP
 ## Find by external id
 
 ```python
-client.find("tt0137523", "imdb_id")
+found = client.find("tt0137523", "imdb_id")
+print(found["movie_results"][0]["title"])  # Fight Club
+
+client.find("361", "kinopoisk_id")
+client.find("Q190050", "wikidata_id")
 ```
+
+`external_source` is one of `imdb_id`, `freebase_mid`, `freebase_id`, `tvdb_id`, `tvrage_id`, `facebook_id`, `twitter_id`, `instagram_id`, `tiktok_id`, `youtube_id`, `wikidata_id` and `kinopoisk_id`. IMDb, TVDB, Facebook, Twitter, Instagram, Wikidata and Kinopoisk ids resolve. The others are accepted and return empty lists. The reply has `movie_results`, `person_results`, `tv_results`, `tv_episode_results` and `tv_season_results`. Each item has a `media_type`, and the episode and season lists are always empty. A missing or unknown source answers 400 with code 22.
 
 ## amodb extras
 
+Every extra works on movies and on TV shows, for example `client.movies.ratings(550)` and `client.tv.ratings(1399)`.
+
 ```python
 ratings = client.movies.ratings(550)
-print(ratings["imdb"])  # {"value": ..., "votes": ...} or None
-
-client.movies.moods(550)
-client.tv.soundtracks(1399)
-client.movies.wikidata(550)
-client.movies.showtimes(550, "US")
-
-client.movies.details(550, append_to_response=["ratings", "moods", "soundtracks"])
+print(ratings["imdb"])  # {"value": 8.8, "votes": 2669989}
+print(ratings["metacritic"]["value"])  # 67, out of 100
 ```
 
-Each rating is a dict with `value` and `votes`, or `None` when the source has no score.
+A provider is `{"value": ..., "votes": ...}` or `None` when it has no score. `votes` can be `None`. IMDb, Kinopoisk and TMDB are out of 10, and Metacritic and Rotten Tomatoes are out of 100.
+
+```python
+moods = client.movies.moods(155)
+print(moods["source"])  # "measured"
+for mood in moods["results"]:
+    print(mood["name"], mood["avg"])  # action 3.9
+```
+
+`source` is `"measured"` for viewer data, `"estimated"` when derived from the genres, or `None` with an empty `results` for a title without data. `avg` and every item of `values` use a 0 to 10 scale.
+
+```python
+album = client.movies.soundtracks(155)["results"][0]
+print(album["album"], album["artist"], album["track_count"])
+print(album["tracks"][0]["title"], album["tracks"][0]["duration_ms"])  # Why So Serious? 554000
+```
+
+`results` is empty when no album is known. An album has a `source` (`"musicbrainz"` or `"deezer"`) and a `tracks` list.
+
+```python
+facts = client.movies.wikidata(550)
+print(facts["budget"])  # {"value": 63000000, "currency": "USD"}
+print(facts["box_office"]["worldwide"])  # True
+print(facts["sitelinks"]["en"])  # Fight Club
+```
+
+Money fields are `{"value", "currency"}` or `None`. The reply also has `awards`, `nominations`, `based_on`, `follows`, `followed_by`, `filming_locations`, `narrative_locations` and `original_broadcasters`. Items are `{"wikidata_id", "label"}` and carry `tmdb_id` and `media_type` when the item is a title in the catalog.
+
+```python
+summary = client.movies.showtimes(550)  # no country: counts per country
+for row in summary["countries"]:
+    print(row["country"], row["venues"], row["showtimes"], row["first_day"], row["last_day"])
+
+for venue in client.movies.showtimes(550, "RU")["results"]:
+    for show in venue["showtimes"]:
+        print(venue["name"], show["start"], show["booking_url"])
+```
+
+`country` is optional. Without it, `results` is empty and `country` is `None`, and `countries` lists up to 60 countries that have showtimes from today on. With a two letter country, `results` lists venues, each with its `showtimes`. `start` is in the venue's local time. `region="RU"` works in place of `country`. To append showtimes, pass `country` as well:
+
+```python
+client.movies.details(550, append_to_response=["moods", "ratings", "showtimes"], country="RU")
+```
+
+An appended `moods`, `ratings` or `soundtracks` section has no `id`. `wikidata` and `showtimes` keep theirs.
+
+## Paths that are not offered
+
+These TMDB paths answer 404 with code 34, so the client has no method for them: `aggregate_credits`, `changes`, `credit/{id}`, `review/{id}`, `person/{id}/translations`, `person/{id}/tagged_images`, `tv/episode_group/{id}`, `tv/{id}/screened_theatrically`, `configuration/timezones`, and `images`, `translations` and `alternative_names` for collections, companies and networks. Anything under `account`, `authentication`, `guest_session` and `list` answers 405 with code 37. `reviews` is always empty, and `include_adult` is ignored because adult titles are never served.
 
 ## Plans and rate limits
 
@@ -169,7 +223,7 @@ except AmodbError as err:
 
 Every error has `status` (HTTP status), `status_code` (the number from the error body, or `None`), `status_message` and `body` (parsed JSON, raw text, or `None`).
 
-Common answers: 401 with code 7 for an invalid key, 402 with code 36 for an expired plan, 404 with code 34 for a missing resource, 405 with code 37 for TMDB write methods, which amodb does not offer.
+Common answers: 401 with code 7 for an invalid key, 402 with code 36 for an expired plan, 404 with code 34 for a missing resource, 405 with code 37 for account, authentication, list and rating paths, which amodb does not offer.
 
 ## Retries and timeouts
 
@@ -240,10 +294,14 @@ Methods return plain dicts. The `amodb.types` module has `TypedDict` classes for
 
 ```python
 from typing import cast
-from amodb.types import MovieDetails
+from amodb.types import MovieDetails, Moods, Showtimes
 
 movie = cast(MovieDetails, client.movies.details(550))
+moods = cast(Moods, client.movies.moods(155))
+showtimes = cast(Showtimes, client.movies.showtimes(550, "RU"))
 ```
+
+The extension types `Moods`, `Soundtracks`, `Ratings`, `Wikidata` and `Showtimes` list every key the API always sends, so those keys are required. `MoodsSection`, `SoundtracksSection` and `RatingsSection` describe the same data inside `append_to_response`, where there is no `id`.
 
 The package ships a `py.typed` marker.
 

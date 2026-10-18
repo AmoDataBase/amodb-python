@@ -17,10 +17,10 @@ from typing import Any, Generic, Literal, TypeVar
 
 from . import _endpoints as ep
 from ._core import Settings
+from .types import ExternalSource
 
 R = TypeVar("R")
 
-ExternalSource = Literal["imdb_id", "tvdb_id", "wikidata_id", "kinopoisk_id"]
 MediaType = Literal["all", "movie", "tv", "person"]
 TimeWindow = Literal["day", "week"]
 
@@ -91,6 +91,15 @@ class Movies(_Resource[R]):
     def alternative_titles(self, id: int, **params: Any) -> R:
         return self._get("/movie/{}/alternative_titles", id, **params)
 
+    def lists(
+        self, id: int, page: int | None = None, *, language: str | None = None, **params: Any
+    ) -> R:
+        return self._get("/movie/{}/lists", id, page=page, language=language, **params)
+
+    def latest(self, *, language: str | None = None, **params: Any) -> R:
+        """The newest movie in the catalog. It has the shape of ``movies.details``."""
+        return self._get("/movie/latest", language=language, **params)
+
     def popular(self, page: int | None = None, *, language: str | None = None, **params: Any) -> R:
         return self._get("/movie/popular", page=page, language=language, **params)
 
@@ -110,18 +119,28 @@ class Movies(_Resource[R]):
     # amodb extras
 
     def moods(self, id: int, **params: Any) -> R:
+        """Mood scores on a 0 to 10 scale. See ``amodb.types.Moods``."""
         return self._get("/movie/{}/moods", id, **params)
 
     def soundtracks(self, id: int, **params: Any) -> R:
+        """The soundtrack album with its tracks. See ``amodb.types.Soundtracks``."""
         return self._get("/movie/{}/soundtracks", id, **params)
 
     def ratings(self, id: int, **params: Any) -> R:
+        """Scores from IMDb, Kinopoisk, Metacritic, Rotten Tomatoes and TMDB."""
         return self._get("/movie/{}/ratings", id, **params)
 
     def wikidata(self, id: int, **params: Any) -> R:
+        """Wikidata facts: budget, box office, awards, sitelinks. See ``amodb.types.Wikidata``."""
         return self._get("/movie/{}/wikidata", id, **params)
 
     def showtimes(self, id: int, country: str | None = None, **params: Any) -> R:
+        """Cinema showtimes. See ``amodb.types.Showtimes``.
+
+        Without ``country`` the reply has per country counts in ``countries`` and an empty
+        ``results``. With a two letter ``country`` such as ``"RU"``, ``results`` lists the
+        venues with their showtimes.
+        """
         return self._get("/movie/{}/showtimes", id, country=country, **params)
 
 
@@ -139,9 +158,6 @@ class Tv(_Resource[R]):
         return self._get(
             "/tv/{}", id, append_to_response=append_to_response, language=language, **params
         )
-
-    def aggregate_credits(self, id: int, *, language: str | None = None, **params: Any) -> R:
-        return self._get("/tv/{}/aggregate_credits", id, language=language, **params)
 
     def credits(self, id: int, *, language: str | None = None, **params: Any) -> R:
         return self._get("/tv/{}/credits", id, language=language, **params)
@@ -178,6 +194,20 @@ class Tv(_Resource[R]):
 
     def watch_providers(self, id: int, **params: Any) -> R:
         return self._get("/tv/{}/watch/providers", id, **params)
+
+    def translations(self, id: int, **params: Any) -> R:
+        return self._get("/tv/{}/translations", id, **params)
+
+    def alternative_titles(self, id: int, **params: Any) -> R:
+        return self._get("/tv/{}/alternative_titles", id, **params)
+
+    def episode_groups(self, id: int, **params: Any) -> R:
+        return self._get("/tv/{}/episode_groups", id, **params)
+
+    def lists(
+        self, id: int, page: int | None = None, *, language: str | None = None, **params: Any
+    ) -> R:
+        return self._get("/tv/{}/lists", id, page=page, language=language, **params)
 
     def season(
         self,
@@ -217,6 +247,10 @@ class Tv(_Resource[R]):
             **params,
         )
 
+    def latest(self, *, language: str | None = None, **params: Any) -> R:
+        """The newest TV show in the catalog. It has the shape of ``tv.details``."""
+        return self._get("/tv/latest", language=language, **params)
+
     def popular(self, page: int | None = None, *, language: str | None = None, **params: Any) -> R:
         return self._get("/tv/popular", page=page, language=language, **params)
 
@@ -238,16 +272,24 @@ class Tv(_Resource[R]):
     # amodb extras
 
     def moods(self, id: int, **params: Any) -> R:
+        """Mood scores on a 0 to 10 scale. See ``amodb.types.Moods``."""
         return self._get("/tv/{}/moods", id, **params)
 
     def soundtracks(self, id: int, **params: Any) -> R:
+        """The soundtrack album with its tracks. See ``amodb.types.Soundtracks``."""
         return self._get("/tv/{}/soundtracks", id, **params)
 
     def ratings(self, id: int, **params: Any) -> R:
+        """Scores from IMDb, Kinopoisk, Metacritic, Rotten Tomatoes and TMDB."""
         return self._get("/tv/{}/ratings", id, **params)
 
     def wikidata(self, id: int, **params: Any) -> R:
+        """Wikidata facts: awards, sitelinks, broadcasters. See ``amodb.types.Wikidata``."""
         return self._get("/tv/{}/wikidata", id, **params)
+
+    def showtimes(self, id: int, country: str | None = None, **params: Any) -> R:
+        """Cinema showtimes. Same arguments and shape as ``movies.showtimes``."""
+        return self._get("/tv/{}/showtimes", id, country=country, **params)
 
 
 class People(_Resource[R]):
@@ -428,6 +470,12 @@ class Keywords(_Resource[R]):
     def details(self, id: int, **params: Any) -> R:
         return self._get("/keyword/{}", id, **params)
 
+    def movies(
+        self, id: int, page: int | None = None, *, language: str | None = None, **params: Any
+    ) -> R:
+        """Movies tagged with this keyword."""
+        return self._get("/keyword/{}/movies", id, page=page, language=language, **params)
+
 
 class Certifications(_Resource[R]):
     """Age rating lists."""
@@ -568,7 +616,10 @@ class ClientApi(Generic[R]):
         language: str | None = None,
         **params: Any,
     ) -> R:
-        """Look up a title or person by an external id such as an IMDb id."""
+        """Look up titles and people by an external id such as an IMDb id.
+
+        ``external_source`` is one of the values of ``amodb.types.ExternalSource``.
+        """
         return self.request(
             *ep.build(
                 "/find/{}",

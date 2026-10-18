@@ -1,0 +1,93 @@
+{
+  "id": 155,
+  "wikidata_id": "Q163872",
+  "budget": {
+    "value": 185000000,
+    "currency": "USD"
+  },
+  "box_office": {
+    "value": 1006234167,
+    "currency": "USD",
+    "worldwide": true
+  },
+  "follows": {
+    "wikidata_id": "Q166262",
+    "label": "Batman Begins",
+    "tmdb_id": 272,
+    "media_type": "movie"
+  },
+  "followed_by": {
+    "wikidata_id": "Q189330",
+    "label": "The Dark Knight Rises",
+    "tmdb_id": 49026,
+    "media_type": "movie"
+  },
+  "sitelinks": {
+    "en": "The Dark Knight",
+    "ru": "Тёмный рыцарь (фильм)",
+    "uk": "Темний лицар (фільм)",
+    "be": "Цёмны рыцар",
+    "bg": "Черният рицар (филм, 2008)",
+    "cs": "Temný rytíř (film)",
+    "pl": "Mroczny Rycerz",
+    "ro": "Cavalerul negru",
+    "fr": "The Dark Knight : Le Chevalier noir",
+    "it": "Il cavaliere oscuro",
+    "es": "The Dark Knight",
+    "pt": "The Dark Knight",
+    "he": "האביר האפל",
+    "zh": "黑暗騎士"
+  },
+  "awards": [
+    {
+      "wikidata_id": "Q106291",
+      "label": "Academy Award for Best Supporting Actor",
+      "year": 2009
+    },
+    {
+      "wikidata_id": "Q488645",
+      "label": "Academy Award for Best Sound Editing",
+      "year": 2009
+    }
+  ],
+  "nominations": [
+    {
+      "wikidata_id": "Q106291",
+      "label": "Academy Award for Best Supporting Actor",
+      "year": 2009
+    },
+    {
+      "wikidata_id": "Q131520",
+      "label": "Academy Award for Best Cinematography",
+      "year": 2009
+    }
+  ],
+  "based_on": [
+    {
+      "wikidata_id": "Q2695156",
+      "label": "Batman",
+      "author": null
+    }
+  ],
+  "filming_locations": [
+    {
+      "wikidata_id": "Q65",
+      "label": "Los Angeles"
+    },
+    {
+      "wikidata_id": "Q1297",
+      "label": "Chicago"
+    }
+  ],
+  "narrative_locations": [
+    {
+      "wikidata_id": "Q732858",
+      "label": "Gotham City"
+    },
+    {
+      "wikidata_id": "Q8646",
+      "label": "Hong Kong"
+    }
+  ],
+  "original_broadcasters": []
+}

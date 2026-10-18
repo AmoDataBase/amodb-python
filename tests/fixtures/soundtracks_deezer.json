@@ -1,0 +1,29 @@
+{
+  "id": 27205,
+  "results": [
+    {
+      "source": "deezer",
+      "album": "Inception (Music from the Motion Picture)",
+      "artist": "Hans Zimmer",
+      "released": "2010-07-09",
+      "url": "https://www.deezer.com/album/601778",
+      "track_count": 12,
+      "tracks": [
+        {
+          "disc": 1,
+          "number": 1,
+          "title": "Half Remembered Dream",
+          "artist": "Hans Zimmer",
+          "duration_ms": 71000
+        },
+        {
+          "disc": 1,
+          "number": 2,
+          "title": "We Built Our Own World",
+          "artist": "Hans Zimmer",
+          "duration_ms": 115000
+        }
+      ]
+    }
+  ]
+}

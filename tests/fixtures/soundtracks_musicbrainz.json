@@ -1,0 +1,36 @@
+{
+  "id": 155,
+  "results": [
+    {
+      "source": "musicbrainz",
+      "album": "The Dark Knight",
+      "artist": "Hans Zimmer & James Newton Howard",
+      "released": "2008-07-15",
+      "url": "https://musicbrainz.org/release/814b2f7b-c27c-451e-abac-a316d2e6cea9",
+      "track_count": 14,
+      "tracks": [
+        {
+          "disc": 1,
+          "number": 1,
+          "title": "Why So Serious?",
+          "artist": "Hans Zimmer",
+          "duration_ms": 554000
+        },
+        {
+          "disc": 1,
+          "number": 2,
+          "title": "I'm Not a Hero",
+          "artist": "Hans Zimmer",
+          "duration_ms": 395000
+        },
+        {
+          "disc": 1,
+          "number": 3,
+          "title": "Harvey Two-Face",
+          "artist": "James Newton Howard",
+          "duration_ms": 377000
+        }
+      ]
+    }
+  ]
+}

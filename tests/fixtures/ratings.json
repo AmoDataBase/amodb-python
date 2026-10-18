@@ -1,0 +1,23 @@
+{
+  "id": 550,
+  "imdb": {
+    "value": 8.8,
+    "votes": 2669989
+  },
+  "kinopoisk": {
+    "value": 8.7,
+    "votes": null
+  },
+  "metacritic": {
+    "value": 67,
+    "votes": null
+  },
+  "rotten_tomatoes": {
+    "value": 81,
+    "votes": null
+  },
+  "tmdb": {
+    "value": 8.437,
+    "votes": 33039
+  }
+}

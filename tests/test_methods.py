@@ -49,6 +49,8 @@ CASES: list[tuple[str, Call, str]] = [
         lambda c: c.movies.alternative_titles(550),
         "/3/movie/550/alternative_titles",
     ),
+    ("movies.lists", lambda c: c.movies.lists(550, 2), "/3/movie/550/lists?page=2"),
+    ("movies.latest", lambda c: c.movies.latest(), "/3/movie/latest"),
     ("movies.popular", lambda c: c.movies.popular(), "/3/movie/popular"),
     ("movies.popular+page", lambda c: c.movies.popular(2), "/3/movie/popular?page=2"),
     (
@@ -68,17 +70,22 @@ CASES: list[tuple[str, Call, str]] = [
         lambda c: c.movies.showtimes(550, "US"),
         "/3/movie/550/showtimes?country=US",
     ),
+    (
+        "movies.showtimes+no-country",
+        lambda c: c.movies.showtimes(550),
+        "/3/movie/550/showtimes",
+    ),
+    (
+        "movies.showtimes+region",
+        lambda c: c.movies.showtimes(550, region="RU"),
+        "/3/movie/550/showtimes?region=RU",
+    ),
     # tv
     ("tv.details", lambda c: c.tv.details(1399), "/3/tv/1399"),
     (
         "tv.details+append",
         lambda c: c.tv.details(1399, append_to_response=["credits", "ratings"]),
         "/3/tv/1399?append_to_response=credits,ratings",
-    ),
-    (
-        "tv.aggregate_credits",
-        lambda c: c.tv.aggregate_credits(1399),
-        "/3/tv/1399/aggregate_credits",
     ),
     ("tv.credits", lambda c: c.tv.credits(1399), "/3/tv/1399/credits"),
     ("tv.images", lambda c: c.tv.images(1399), "/3/tv/1399/images"),
@@ -98,6 +105,14 @@ CASES: list[tuple[str, Call, str]] = [
         lambda c: c.tv.watch_providers(1399),
         "/3/tv/1399/watch/providers",
     ),
+    ("tv.translations", lambda c: c.tv.translations(1399), "/3/tv/1399/translations"),
+    (
+        "tv.alternative_titles",
+        lambda c: c.tv.alternative_titles(1399),
+        "/3/tv/1399/alternative_titles",
+    ),
+    ("tv.episode_groups", lambda c: c.tv.episode_groups(1399), "/3/tv/1399/episode_groups"),
+    ("tv.lists", lambda c: c.tv.lists(1399), "/3/tv/1399/lists"),
     ("tv.season", lambda c: c.tv.season(1399, 1), "/3/tv/1399/season/1"),
     (
         "tv.season+append",
@@ -105,6 +120,7 @@ CASES: list[tuple[str, Call, str]] = [
         "/3/tv/1399/season/2?append_to_response=credits",
     ),
     ("tv.episode", lambda c: c.tv.episode(1399, 1, 2), "/3/tv/1399/season/1/episode/2"),
+    ("tv.latest", lambda c: c.tv.latest(), "/3/tv/latest"),
     ("tv.popular", lambda c: c.tv.popular(), "/3/tv/popular"),
     ("tv.top_rated", lambda c: c.tv.top_rated(4), "/3/tv/top_rated?page=4"),
     ("tv.airing_today", lambda c: c.tv.airing_today(), "/3/tv/airing_today"),
@@ -113,6 +129,12 @@ CASES: list[tuple[str, Call, str]] = [
     ("tv.soundtracks", lambda c: c.tv.soundtracks(1399), "/3/tv/1399/soundtracks"),
     ("tv.ratings", lambda c: c.tv.ratings(1399), "/3/tv/1399/ratings"),
     ("tv.wikidata", lambda c: c.tv.wikidata(1399), "/3/tv/1399/wikidata"),
+    ("tv.showtimes", lambda c: c.tv.showtimes(1399), "/3/tv/1399/showtimes"),
+    (
+        "tv.showtimes+country",
+        lambda c: c.tv.showtimes(1399, "RU"),
+        "/3/tv/1399/showtimes?country=RU",
+    ),
     # people
     ("people.details", lambda c: c.people.details(287), "/3/person/287"),
     (
@@ -190,6 +212,7 @@ CASES: list[tuple[str, Call, str]] = [
     ("companies.details", lambda c: c.companies.details(3), "/3/company/3"),
     ("networks.details", lambda c: c.networks.details(49), "/3/network/49"),
     ("keywords.details", lambda c: c.keywords.details(180547), "/3/keyword/180547"),
+    ("keywords.movies", lambda c: c.keywords.movies(818, 2), "/3/keyword/818/movies?page=2"),
     # find, configuration, certifications, watch providers
     (
         "find",
@@ -210,6 +233,11 @@ CASES: list[tuple[str, Call, str]] = [
         "find+fourth-source",
         lambda c: c.find("361", "kinopoisk_id"),
         "/3/find/361?external_source=kinopoisk_id",
+    ),
+    (
+        "find+language",
+        lambda c: c.find("nm0000093", "imdb_id", language="ru-RU"),
+        "/3/find/nm0000093?external_source=imdb_id&language=ru-RU",
     ),
     ("configuration", lambda c: c.configuration(), "/3/configuration"),
     ("certifications.movie", lambda c: c.certifications.movie(), "/3/certification/movie/list"),
@@ -283,6 +311,8 @@ EXPECTED_METHODS: dict[str, set[str]] = {
         "watch_providers",
         "translations",
         "alternative_titles",
+        "lists",
+        "latest",
         "popular",
         "top_rated",
         "upcoming",
@@ -295,7 +325,6 @@ EXPECTED_METHODS: dict[str, set[str]] = {
     },
     "tv": {
         "details",
-        "aggregate_credits",
         "credits",
         "images",
         "videos",
@@ -306,8 +335,13 @@ EXPECTED_METHODS: dict[str, set[str]] = {
         "reviews",
         "content_ratings",
         "watch_providers",
+        "translations",
+        "alternative_titles",
+        "episode_groups",
+        "lists",
         "season",
         "episode",
+        "latest",
         "popular",
         "top_rated",
         "airing_today",
@@ -316,6 +350,7 @@ EXPECTED_METHODS: dict[str, set[str]] = {
         "soundtracks",
         "ratings",
         "wikidata",
+        "showtimes",
     },
     "people": {
         "details",
@@ -333,7 +368,7 @@ EXPECTED_METHODS: dict[str, set[str]] = {
     "collections": {"details"},
     "companies": {"details"},
     "networks": {"details"},
-    "keywords": {"details"},
+    "keywords": {"details", "movies"},
     "certifications": {"movie", "tv"},
     "watch_providers": {"regions", "movie", "tv"},
     "omdb": {"by_id", "by_title", "search"},

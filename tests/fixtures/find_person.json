@@ -1,0 +1,20 @@
+{
+  "movie_results": [],
+  "person_results": [
+    {
+      "adult": false,
+      "gender": 2,
+      "id": 287,
+      "known_for_department": "Acting",
+      "name": "Brad Pitt",
+      "original_name": "Brad Pitt",
+      "popularity": 13.5158,
+      "profile_path": "/ajNaPmXVVMJFg9GWmu6MJzTaXdV.jpg",
+      "known_for": [],
+      "media_type": "person"
+    }
+  ],
+  "tv_results": [],
+  "tv_episode_results": [],
+  "tv_season_results": []
+}

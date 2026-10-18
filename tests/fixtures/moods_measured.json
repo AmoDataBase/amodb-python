@@ -1,0 +1,33 @@
+{
+  "id": 155,
+  "source": "measured",
+  "results": [
+    {
+      "name": "action",
+      "avg": 3.9,
+      "values": [
+        3.6,
+        3.4,
+        4.2
+      ]
+    },
+    {
+      "name": "fear",
+      "avg": 5.2,
+      "values": [
+        3.6,
+        6,
+        4.8
+      ]
+    },
+    {
+      "name": "humor",
+      "avg": 0.9,
+      "values": [
+        2.4,
+        1.8,
+        0.4
+      ]
+    }
+  ]
+}

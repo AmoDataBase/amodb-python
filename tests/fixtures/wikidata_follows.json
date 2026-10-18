@@ -1,0 +1,52 @@
+{
+  "id": 604,
+  "wikidata_id": "Q189600",
+  "budget": {
+    "value": 150000000,
+    "currency": "USD"
+  },
+  "box_office": {
+    "value": 739412035,
+    "currency": "USD",
+    "worldwide": true
+  },
+  "follows": {
+    "wikidata_id": "Q83495",
+    "label": "The Matrix",
+    "tmdb_id": 603,
+    "media_type": "movie"
+  },
+  "followed_by": {
+    "wikidata_id": "Q207536",
+    "label": "The Matrix Revolutions",
+    "tmdb_id": 605,
+    "media_type": "movie"
+  },
+  "sitelinks": {
+    "en": "The Matrix Reloaded",
+    "ru": "Матрица: Перезагрузка",
+    "uk": "Матриця: Перезавантаження",
+    "be": "be-tarask:Матрыца перазагрузка",
+    "bg": "Матрицата: Презареждане",
+    "cs": "Matrix Reloaded",
+    "pl": "Matrix Reaktywacja",
+    "ro": "Matrix - Reîncărcat",
+    "fr": "Matrix Reloaded",
+    "it": "Matrix Reloaded",
+    "es": "The Matrix Reloaded",
+    "pt": "Matrix Reloaded",
+    "he": "מטריקס Reloaded",
+    "zh": "黑客帝国2：重装上阵"
+  },
+  "awards": [],
+  "nominations": [],
+  "based_on": [],
+  "filming_locations": [
+    {
+      "wikidata_id": "Q3130",
+      "label": "Sydney"
+    }
+  ],
+  "narrative_locations": [],
+  "original_broadcasters": []
+}

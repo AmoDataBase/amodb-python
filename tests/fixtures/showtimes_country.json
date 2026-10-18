@@ -1,0 +1,55 @@
+{
+  "id": 550,
+  "country": "RU",
+  "results": [
+    {
+      "id": 1114,
+      "name": "Мираж Синема НА БОЛЬШОМ",
+      "chain": {
+        "key": "mirage-ru",
+        "name": "Мираж Синема"
+      },
+      "city": "Санкт-Петербург",
+      "region": null,
+      "address": "Большой пр. П.С., д. 35А",
+      "postal_code": null,
+      "country": "RU",
+      "timezone": "Europe/Moscow",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "url": "https://www.mirage.ru/spb/cinema/1/",
+      "showtimes": [
+        {
+          "date": "2026-10-18",
+          "start": "2026-10-18T21:40",
+          "end": null,
+          "auditorium": null,
+          "formats": [
+            "2D"
+          ],
+          "tags": [],
+          "audio": null,
+          "subtitles": null,
+          "language": null,
+          "price": null,
+          "currency": null,
+          "prices": null,
+          "booking_url": "https://www.mirage.ru/ticket_new/aca7b114-d587-4fc5-9df6-28568e8fa9b3/",
+          "sold_out": false
+        }
+      ]
+    }
+  ],
+  "countries": [
+    {
+      "country": "RU",
+      "name": "Russia",
+      "venues": 2,
+      "cities": 1,
+      "showtimes": 7,
+      "first_day": "2026-10-18",
+      "last_day": "2026-10-21"
+    }
+  ]
+}
