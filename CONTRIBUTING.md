@@ -32,7 +32,7 @@ For maintainers.
 
 PyPI uses trusted publishing, so no token is stored. One time setup:
 
-1. On PyPI add a trusted publisher for the project `amodb` with owner `amodb-dev`, repository `amodb-python`, workflow `release.yml` and environment `pypi`.
+1. On PyPI add a trusted publisher for the project `amodb` with owner `AmoDataBase`, repository `amodb-python`, workflow `release.yml` and environment `pypi`.
 2. In the repository settings create an environment named `pypi`.
 
 By contributing you agree that your work is released under the MIT license of this repository.

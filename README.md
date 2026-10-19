@@ -1,8 +1,8 @@
 <p align="center">
   <a href="https://amodb.dev">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/amodb-dev/.github/main/assets/lockup-dark.png">
-      <img src="https://raw.githubusercontent.com/amodb-dev/.github/main/assets/lockup-light.png" alt="amodb" width="260">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AmoDataBase/.github/main/assets/lockup-dark.png">
+      <img src="https://raw.githubusercontent.com/AmoDataBase/.github/main/assets/lockup-light.png" alt="amodb" width="260">
     </picture>
   </a>
 </p>
@@ -12,9 +12,9 @@
 <p align="center">Python client for the amodb movie and TV metadata API. Sync, async and typed.</p>
 
 <p align="center">
-  <a href="https://github.com/amodb-dev/amodb-python/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/amodb-dev/amodb-python/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/AmoDataBase/amodb-python/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/AmoDataBase/amodb-python/actions/workflows/ci.yml/badge.svg"></a>
   <a href="https://pypi.org/project/amodb/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/amodb"></a>
-  <a href="https://github.com/amodb-dev/amodb-python/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/amodb-dev/amodb-python"></a>
+  <a href="https://github.com/AmoDataBase/amodb-python/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/AmoDataBase/amodb-python"></a>
 </p>
 
 Typed Python client for the amodb movie and TV metadata API. It covers the TMDB v3 read endpoints, the OMDb compatible endpoint and the amodb extras (ratings, moods, soundtracks, wikidata, showtimes). Account, authentication and list write endpoints are not offered. It ships a sync `Client` and an async `AsyncClient`, both built on httpx.
@@ -340,10 +340,10 @@ Tests use `httpx.MockTransport` and never touch the network.
 - Docs: https://amodb.dev/docs
 - Pricing: https://amodb.dev/pricing
 - Status: https://amodb.dev/status
-- Issues: https://github.com/amodb-dev/amodb-python/issues
-- Changelog: https://github.com/amodb-dev/amodb-python/blob/main/CHANGELOG.md
-- Security: https://github.com/amodb-dev/amodb-python/blob/main/SECURITY.md
-- Organization: https://github.com/amodb-dev
+- Issues: https://github.com/AmoDataBase/amodb-python/issues
+- Changelog: https://github.com/AmoDataBase/amodb-python/blob/main/CHANGELOG.md
+- Security: https://github.com/AmoDataBase/amodb-python/blob/main/SECURITY.md
+- Organization: https://github.com/AmoDataBase
 
 ## License
 

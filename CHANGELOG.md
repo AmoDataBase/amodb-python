@@ -17,7 +17,7 @@ Align extension types with the live API.
 - Added `movies.latest`, `movies.lists`, `tv.latest`, `tv.lists`, `tv.episode_groups`, `tv.translations`, `tv.alternative_titles`, `tv.showtimes` and `keywords.movies`.
 - README examples use the real field names and list the paths that are not offered.
 - Add CI, release and Dependabot workflows.
-- Repository and package URLs now point to the amodb-dev organization.
+- Repository and package URLs now point to the AmoDataBase organization.
 
 ## 0.1.0 - 2026-10-18
 

@@ -1,6 +1,6 @@
 # Publishes to PyPI when a tag like v0.2.0 is pushed. No token is stored.
 # One time setup:
-#   1. On PyPI add a trusted publisher for the project amodb: owner amodb-dev,
+#   1. On PyPI add a trusted publisher for the project amodb: owner AmoDataBase,
 #      repository amodb-python, workflow release.yml, environment pypi.
 #   2. In the repository settings create an environment named pypi.
 # The version in src/amodb/_version.py must match the tag.
